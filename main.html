@@ -1,0 +1,331 @@
+<html>
+<head>
+
+</head>
+<body>
+    <div id="navbar"><p onclick="save()">Save</p><p onclick="imp()">Import</p><p onclick="alert('Made by Shaurya Pratap Srivastava')">Credits</p></div>
+    <div id="progression">
+        
+        <div class="stage">
+            <textarea class="leveltext" placeholder="Level text"></textarea>
+            <textarea class="source" placeholder="Source"></textarea> 
+            <arrow>></arrow>
+        </div>
+        <div id="toolset">
+        <button id="add" onclick="add()">+</button><button id="subtract" onclick="sub()">-</button><button id="add2" onclick="add2()" style="font-family:monospace;">pw</button>
+        </div>
+    </div>
+    <script>
+        values = [];
+        function save() {
+            data = document.getElementById('progression').innerHTML;
+            values = [];
+            for (i = 0; i < document.getElementsByTagName('textarea').length; i++) {
+                values.push(document.getElementsByTagName('textarea')[i].value);
+            }
+            total = JSON.stringify([data, values]);
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(total));
+            element.setAttribute('download', 'Your Project.hunt');
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+        }
+        function imp() {
+            var input = document.createElement('input');
+            input.type = 'file';
+            input.onchange = e => {
+
+                var file = e.target.files[0];
+                var reader = new FileReader();
+                reader.readAsText(file, 'UTF-8');
+
+                reader.onload = readerEvent => {
+                    var content = readerEvent.target.result;
+                    document.getElementById('progression').innerHTML = JSON.parse(content)[0];
+                    values = JSON.parse(content)[1];
+                    for (i = 0; i < document.getElementsByTagName('textarea').length; i++) {
+                        if (values[i] != undefined) {
+                            document.getElementsByTagName('textarea')[i].value = values[i];
+                        }
+                    }
+                }
+
+            }
+            
+            input.click();
+        }
+        function add() {
+            values = [];
+            for (i = 0; i < document.getElementsByTagName('textarea').length; i++) {
+                values.push(document.getElementsByTagName('textarea')[i].value);
+            }
+            document.getElementById('add').remove();
+            document.getElementById('add2').remove();
+            document.getElementById('subtract').remove();
+            document.getElementById('toolset').remove();
+            document.getElementById('progression').innerHTML += `<div class="stage" align="center">
+            <textarea class="leveltext" placeholder="Text"></textarea>
+            <textarea class="source" placeholder="Source"></textarea> <arrow>></arrow>
+        </div>`;
+            document.getElementById('progression').innerHTML += `<div id="toolset">
+        <button id="add" onclick="add()">+</button><button id="subtract" onclick="sub()">-</button><button id="add2" onclick="add2()">pw</button>
+        </div>`;
+            for (i = 0; i < document.getElementsByTagName('textarea').length; i++) {
+                if (values[i] != undefined) {
+                    document.getElementsByTagName('textarea')[i].value = values[i];
+                }
+            }
+
+        }
+        function add2() {
+            values = [];
+            for (i = 0; i < document.getElementsByTagName('textarea').length; i++) {
+                values.push(document.getElementsByTagName('textarea')[i].value);
+            }
+            document.getElementById('add').remove();
+            document.getElementById('add2').remove();
+            document.getElementById('subtract').remove();
+            document.getElementById('toolset').remove();
+            document.getElementById('progression').innerHTML += `<div class="stage" align="center">
+            <textarea class="leveltext pw" placeholder="Password"></textarea><arrow>></arrow>
+        </div>`;
+            document.getElementById('progression').innerHTML += `<div id="toolset">
+        <button id="add" onclick="add()">+</button><button id="subtract" onclick="sub()">-</button><button id="add2" onclick="add2()">pw</button>
+        </div>`;
+            for (i = 0; i < document.getElementsByTagName('textarea').length; i++) {
+                if (values[i] != undefined) {
+                    document.getElementsByTagName('textarea')[i].value = values[i];
+                }
+            }
+        }
+        function sub() {
+            values = [];
+            for (i = 0; i < document.getElementsByTagName('textarea').length; i++) {
+                values.push(document.getElementsByTagName('textarea')[i].value);
+            }
+            l = document.getElementsByClassName('stage')
+            l[l.length - 1].remove();
+
+            for (i = 0; i < document.getElementsByTagName('textarea').length; i++) {
+                if (values[i] != undefined) {
+                    document.getElementsByTagName('textarea')[i].value = values[i];
+                }
+            }
+        }
+
+
+
+    </script>
+    <div id="toolbar">
+        <div class="tool" id="text"><h>TEXT</h> <br />
+            <ul>
+                <li>Equation</li>
+                <li>Hash</li>
+                <li>Binary</li>
+                <li>Reference to a topic (Book, TV, Game..)</li>
+                <li>Mix of capitalized/uncapitalized letters</li>
+                <li>Recipe</li>
+                <li>Movie Name</li>
+                <li>Wikipedia page</li>
+                <li>Time/date of historical events</li>
+                <li>Chemical reaction formula</li>
+                <li>Ascii Art</li>
+                <li>Lyrics to a song</li>
+            </ul>
+            
+        </div>
+        <div class="tool" id="source">
+            <h>SOURCE</h> <br /><br />
+            - URL
+            <ul>
+                <li>Imgur</li>
+                <li>Pastebin</li>
+                <li>Social media profile</li>
+                <li>Youtube video</li>
+                <li>Drive link</li>
+                <li>Discord server link</li>
+            </ul>
+
+            - FORM
+            <ul>
+                <li>Coordinates</li>
+                <li>MP3 file</li>
+                <li>MP4 file</li>
+                <li>Steg image</li>
+                <li>Contrasted image</li>
+                <li>CTF code</li>
+                <li>Docker env</li>
+                <li>QR Code</li>
+                <li>Bar code</li>
+                <li>Binary in img (black white pixels)</li>
+                <li>Alien language text on img</li>
+                <li>Interactive discord bot</li>
+                <li>Bit.ly link</li>
+            </ul>
+        </div>
+        <div class="tool" id="ciphers"><h>CIPHERS</h><br />
+           <ul>
+             <li>Affine </li>
+             <li>Baconian</li>
+             <li>Bifid</li>
+             <li>Caesar</li>
+             <li>Columnar Transposition</li>
+             <li>Gronsfeld</li>
+             <li>One Time Pad</li>
+             <li>Playfair</li>
+             <li>Rail Fence</li>
+             <li>Rotate</li>
+             <li>Skip</li>
+             <li>Übchi</li>
+             <li>Vigenère</li>
+          </ul>
+        </div>
+        <div class="tool" id="substitution"><h>SUBSTITUTION</h><br />
+            <ul>
+                <li>American Sign Language</li>
+                <li> Atbash</li>
+                <li> Base64</li>
+                <li> Binary</li>
+                <li> Dancing Men</li>
+                <li> Flag Semaphore</li>
+                <li> Gold Bug</li>
+                <li> Lego Bionicle</li>
+                <li> Letter Numbers</li>
+                <li> Morse Code</li>
+                <li> Pigpen</li>
+                <li> Rot13</li>
+                <li> Spirit DVD Code</li>
+                <li> Webdings</li>
+                <li> Wingdings</li>
+            </ul>
+        </div>
+    </div>
+    <style>
+        .pw {
+
+        }
+        h1{
+            position:fixed;
+            top:0px;
+        }
+        #navbar {
+            top: 0px;
+            left:-1px;
+            position: fixed;
+            width: 96.5%;
+            border: 3px solid black;
+            padding: 20px;
+            
+        }
+        p:hover {
+            text-decoration: underline;
+        }
+        .tool{
+            overflow:scroll;
+        }
+        #toolset {
+            display:inline-flex;
+            margin-left:-30px;
+        }
+        p{
+            display:inline;
+            margin:10px;
+            font-family:monospace;
+            font-size:15px;
+            margin-right:30px;
+            padding-top:30px;
+        }
+        .tool {
+            
+        }
+        body{
+            font-family:monospace;
+        }
+        .tool{
+            width:25%;
+            border:2px solid black;
+            border-radius:10px;
+            height:200px;
+            font-family:monospace;
+            padding:5px;
+        }
+        #toolbar{
+            position:fixed;
+            display:flex;
+            bottom:0px;
+            left:0px;
+            height:200px;
+            width:100%
+        }
+        #progression {
+            position: fixed;
+            left:0px;
+            top:40%;
+            font-size:50px;
+            transform:translate(0%,-50%);
+            width:100%;
+            white-space:nowrap;
+            display: inline;
+            overflow-x:scroll;
+            max-width:none;
+        }
+        .stage {
+            display: inline;
+            vertical-align:middle;
+            margin-left:50px;
+            margin-right:90px;
+        }
+        arrow{
+           position:absolute;
+           top:25%;
+           padding-left:50px;
+           padding-right:50px;
+        }
+        #add {
+            position: absolute;
+            top: 50%;
+            transform:translate(0%,-50%);
+            margin-left:50px;
+            font-size:20px;
+        }
+        #add2 {
+            position: absolute;
+            top: 50%;
+            transform: translate(0%,-50%);
+            margin-left: 125px;
+            font-size: 15px;
+            padding-top:4px;
+            padding-bottom:4px;
+        }
+        #subtract {
+            position: absolute;
+            top: 50%;
+            transform: translate(0%,-50%);
+            margin-left: 90px;
+            font-size: 20px;
+        }
+        textarea {
+            height:100px;
+            padding:10px;
+            border-radius:5px;
+            border:2px solid black;
+            resize:none;
+            overflow-y:scroll;
+        }
+        button {
+            background-color: white;
+            border-radius: 3px;
+            border: 2px solid black;
+        }
+        button:hover{
+            color:white;
+            background-color:black;
+        }
+    </style>
+</body>
+</html>
